@@ -1,6 +1,4 @@
 import {
-	composeWithMongooseDiscriminators,
-	ComposeWithMongooseOpts,
 	composeWithMongoose,
 } from 'graphql-compose-mongoose'
 
