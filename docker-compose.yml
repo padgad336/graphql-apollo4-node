@@ -1,0 +1,50 @@
+version: '2.1'
+services:
+  api:
+    depends_on:
+      mongo:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./assets:/opt/app/assets
+
+    environment:
+      TZ: Asia/Bangkok
+    container_name: api
+    hostname: api
+    networks:
+      - myweb
+    labels:
+      - traefik.web.frontend.rule=Host:myweb.com
+      - traefik.web.port=8000
+      - traefik.docker.network=myweb
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - ./db/mongo:/data/db
+    container_name: mongo
+    hostname: mongo
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/usr/bin/mongosh',
+          '--eval',
+          "db.adminCommand('ping')"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - myweb
+
+networks:
+  myweb:
+    external: true
