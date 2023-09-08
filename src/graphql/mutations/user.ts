@@ -4,7 +4,8 @@ import { PubSub } from 'graphql-subscriptions'
 import { Resolver, schemaComposer } from 'graphql-compose'
 
 import { UserModel } from '../../models'
-import { UserTC} from '../type-composers/user'
+import { UserTC } from '../type-composers/user'
+import { hashPassword } from '../../libs/hash-password'
 
 export const pubsub = new PubSub()
 interface Args {
@@ -21,7 +22,7 @@ const setPassword = new Resolver<any, any, Args, any>(
 		},
 		resolve: async ({ args }) => {
 			const { _id, password } = args
-			const hashedPassword = passwordHash.generate(password)
+			const hashedPassword = hashPassword(password)
 			const user = await UserModel.findOneAndUpdate(
 				{ _id },
 				{ password: hashedPassword },
