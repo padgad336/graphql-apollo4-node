@@ -1,10 +1,10 @@
-import passwordHash from "password-hash";
 
 import { GraphQLError } from 'graphql';
 import { Resolver, schemaComposer } from "graphql-compose";
 
 import { UserModel } from "../../models";
 import { jwtSign } from "../../../config/util";
+import { comparePassword } from "../../libs/hash-password";
 interface Args {
   username: string;
   password: string;
@@ -28,9 +28,9 @@ const loginResolver = new Resolver<any, any, Args, any>(
             myExtension: "foo",
           },
         });
-       
+
       }
-      const valid = passwordHash.verify(password, `${user.password}`);
+      const valid = comparePassword(password, `${user.password}`);
       if (!valid) {
         throw new GraphQLError(`"Incorrect password"`, {
           extensions: {
