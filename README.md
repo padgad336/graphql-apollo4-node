@@ -1,5 +1,5 @@
 # Notification Service
-  <h2>NodeJS Typescript PM2</h2>
+  <h2>NODEJS Typescript Graphql APOLLO V4 PM2 Boilerplate</h2>
 
  ## Installation
 
@@ -12,8 +12,10 @@ Use the package manager [yarn](https://yarnpkg.com/getting-started/install) to i
  #### dev
 ```bash
 # start develop
-  yarn develop
+  yarn dev
+ 
 ```
+ - to run the project, server will run on `http://localhost:8000/graphql`
  #### production
 ```bash
 # start production
@@ -26,22 +28,7 @@ Use the package manager [yarn](https://yarnpkg.com/getting-started/install) to i
 PORT=8940
 //config link url mongoDB
 MONGO_URI=mongodb+srv://
-//config redis HOST & PORT
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
 JWT_SECRET=localsecret
-  ```
-## build
-  ```bash
-  //build image
-  docker-compose  --build
 
-  //save image docker to tar
-  docker save -o d_notice_api.tar d_notice_api
-  //load
-  docker load --input d_notice_api.tar     
-  //run
-  docker run --restart always -p 8070:8070 --env-file .env.prod --name back_api d_notice_api
-
-  ```
+## Config
+  #### .
