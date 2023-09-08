@@ -10,7 +10,9 @@ const options = {
 	...mongooseOptions,
 	promiseLibrary: Promise,
 }
-mongoose.Promise = Promise
-// mongoose.connect(uri, options)
+if (config.get('env') === 'production') {
+	mongoose.connect(uri, options)
+} else {
 
-mongoose.connect(`${uri}`)
+	mongoose.connect(`${uri}`)
+}

@@ -1,5 +1,5 @@
 module.exports = {
-  env: 'development',
+  env: 'production',
   cors: {
     origin: '*',
     credentials: true,
